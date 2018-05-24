@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jjoey.transportr.activities.LandingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/taxi_img" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.6"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="32sp"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_textview"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:padding="10dp"/>
+
+            <com.reginald.editspinner.EditSpinner
+                android:id="@+id/et_country_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_icon_bkg"
+                android:hint="@string/country_code_hint"
+                android:gravity="center"
+                android:editable="false"
+                android:textColorHint="@color/otp_gray"
+                android:drawableLeft="@drawable/globe"
+                android:drawableRight="@drawable/bottom_arrow"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:elevation="10dp"/>
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_icon_bkg"
+                android:hint="@string/phone_num_hint"
+                android:gravity="center"
+                android:textColorHint="@color/otp_gray"
+                android:inputType="phone|number"
+                android:maxLines="1"
+                android:maxLength="10"
+                android:digits="0123456789"
+                android:drawableLeft="@drawable/phone"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:elevation="10dp"/>
+
+            <Button
+                android:id="@+id/otp_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/app_btn_bkg"
+                android:text="@string/get_otp"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:padding="18dp"
+                android:textAllCaps="false"
+                android:layout_marginTop="25dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

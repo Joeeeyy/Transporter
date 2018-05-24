@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Transportr</string>
+    <string name="phone_textview">Please enter your phone number to login or create account</string>
+    <string name="phone_num_hint">Phone number</string>
+    <string name="country_code_hint">Country Code</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="otp_prompt_tv">Enter One Time Password</string>
+    <string name="otp_info_tv">One Time Password (OTP) has been sent to your phone number. Please enter the same here to login.</string>
+    <string name="otp_continue_text">Continue</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="continue_login_text"><![CDATA[Continue & Login]]></string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="email_hint">Email Id</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+
+    <!-- regex -->
+    <string name="letters_only">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="email_only">abcdefghijklmnopqrstuvwxyzzABCDEFGHIJKLMNOPQRSTUVWXYZ.0123456789@</string>
+    <string name="password_only">abcdefghijklmnopqrstuvwxyzzABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789</string>
+    <string name="add_payment_btn_txt"> + Add New Payment Method</string>
+    <string name="empty_payment_tv">You Currently Have No Payment Methods Setup</string>
+    <string name="refer_n_earn"><![CDATA[Refer & Earn]]></string>
+    <string name="help">Help</string>
+    <string name="payment_options">Payment Options</string>
+    <string name="your_trips">Your Trips</string>
+    <string name="priv_policy">Privacy Policy</string>
+    <string name="profile_settings_txt"><![CDATA[Profile & Settings]]></string>
+    <string name="book_ride_txt">Book A Ride</string>
+    <string name="empty_notifs_tv">All Admin Notifications, Discounts and Coupon News Will Appear Here</string>
+    <string name="notifs_txt">Notifications</string>
+
+    <string-array name="countries">
+        <item>Philippines +63</item>
+    </string-array>
+
+</resources>

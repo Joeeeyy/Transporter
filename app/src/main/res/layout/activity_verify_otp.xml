@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jjoey.transportr.activities.LandingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/taxi_img" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.6"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/otp_prompt_tv"
+                android:textSize="22sp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:fontFamily="monospace"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/otp_info_tv"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/firstDigit"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/otp_empty_bkg"
+                    tools:text="8"
+                    android:textSize="30sp"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:inputType="number"
+                    android:digits="1234567890"
+                    android:nextFocusRight="@+id/secondDigit"
+                    android:layout_marginRight="10dp"/>
+
+                <EditText
+                    android:id="@+id/secondDigit"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/otp_empty_bkg"
+                    tools:text="5"
+                    android:textSize="30sp"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:inputType="number"
+                    android:digits="1234567890"
+                    android:nextFocusRight="@+id/thirdDigit"
+                    android:layout_toRightOf="@id/firstDigit"
+                    android:layout_marginRight="10dp"/>
+
+                <EditText
+                    android:id="@+id/thirdDigit"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/otp_empty_bkg"
+                    android:textColor="@android:color/black"
+                    tools:text="6"
+                    android:textSize="30sp"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:inputType="number"
+                    android:digits="1234567890"
+                    android:nextFocusRight="@+id/fourthDigit"
+                    android:layout_toRightOf="@id/secondDigit"
+                    android:layout_marginRight="10dp"/>
+
+                <EditText
+                    android:id="@+id/fourthDigit"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/otp_empty_bkg"
+                    tools:text="7"
+                    android:textSize="30sp"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:inputType="number"
+                    android:digits="1234567890"
+                    android:nextFocusRight="@+id/thirdDigit"
+                    android:layout_toRightOf="@id/thirdDigit"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/resendOTP_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resend_code"
+                android:textAllCaps="false"
+                android:textColor="@color/bluish"
+                android:linksClickable="true"
+                android:textColorLink="@color/bluish"
+                android:padding="10dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:id="@+id/continueBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/app_btn_bkg"
+                android:text="@string/otp_continue_text"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:padding="18dp"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
