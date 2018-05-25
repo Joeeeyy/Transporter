@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
+        android:minHeight="?android:attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,115 +21,226 @@
                 android:id="@+id/backIV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/back_arrow"
                 android:layout_centerVertical="true"
+                android:paddingBottom="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:src="@drawable/back_arrow" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:text="@string/profile_settings_txt"
                 android:textColor="@color/otp_gray"
-                android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_centerInParent="true"/>
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
+        android:fillViewport="true"
+        android:scrollbars="none"
         android:layout_margin="16dp">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/profileCard"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImg"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    tools:src="@mipmap/ic_launcher"/>
-
-                <LinearLayout
-                    android:id="@+id/metaLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_toRightOf="@id/profileImg"
-                    android:layout_marginLeft="16dp">
-
-                    <TextView
-                        android:id="@+id/profileNameTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="John Doe"
-                        android:textSize="20sp"
-                        android:textColor="@color/otp_gray"/>
-
-                    <TextView
-                        android:id="@+id/emailTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="John Doe"
-                        android:textSize="11sp"
-                        android:maxLength="16"
-                        android:maxLines="1"
-                        android:textColor="@color/otp_gray"/>
-
-                    <TextView
-                        android:id="@+id/phoneTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="John Doe"
-                        android:textSize="11sp"
-                        android:textColor="@color/otp_gray"
-                        android:maxLines="1"
-                        android:maxLength="16"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/editIV"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:padding="10dp"
-                    android:background="@drawable/circle_gray"
-                    android:src="@drawable/edit"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/changePwdCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profileCard"
-            android:layout_marginTop="20dp"
-            android:background="@android:color/white">
-
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/profileCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImg"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        tools:src="@mipmap/ic_launcher" />
+
+                    <LinearLayout
+                        android:id="@+id/metaLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/profileImg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/profileNameTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/black"
+                            android:textSize="23sp"
+                            tools:text="John Doe" />
+
+                        <TextView
+                            android:id="@+id/emailTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:maxLength="16"
+                            android:maxLines="1"
+                            android:textColor="@color/otp_gray"
+                            android:textSize="13sp"
+                            tools:text="John Doe" />
+
+                        <TextView
+                            android:id="@+id/phoneTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:maxLength="16"
+                            android:maxLines="1"
+                            android:textColor="@color/otp_gray"
+                            android:textSize="12sp"
+                            tools:text="John Doe" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/editIV"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/circle_gray"
+                        android:padding="10dp"
+                        android:src="@drawable/edit" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/changePwdCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileCard"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profileCard">
+
+                    <EditText
+                        android:id="@+id/et_change_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/et_icon_white_bkg"
+                        android:drawableLeft="@drawable/lock"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/arrow_right"
+                        android:editable="false"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:hint="@string/change_password_hint"
+                        android:padding="15dp"
+                        android:textColorHint="@color/otp_gray" />
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/savedPlacesTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/changePwdCard"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="@string/saved_places"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:id="@+id/savedLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/savedPlacesTV">
+
+                <com.jjoey.transportr.utils.EmptyRecyclerView
+                    android:id="@+id/savedPlacesRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:minHeight="50dp" />
+
+                <LinearLayout
+                    android:id="@+id/emptyPlacesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/emptyPlacesIV"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/home_saved"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="sans-serif-condensed"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_saved_places"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"/>
+
+                </LinearLayout>
+
             </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/addPlacesTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_new_places"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/savedLayout"/>
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/logOutLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/log_out"
+            android:textSize="18sp"
+            android:textColor="@color/otp_gray"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:drawableLeft="@drawable/terminate"
+            android:drawablePadding="10dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

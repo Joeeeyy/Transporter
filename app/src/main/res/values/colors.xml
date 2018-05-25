@@ -8,5 +8,7 @@
     <color name="edit_text_bkg">#f4f4f4</color>
     <color name="bluish">#2aafe5</color>
     <color name="gray">#c2c2c2</color>
+    <color name="black">#000</color>
+    <color name="white">#FFF</color>
 
 </resources>
