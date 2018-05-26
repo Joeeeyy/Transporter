@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.utils.EmptyRecyclerView;
+import com.jjoey.transportr.utils.FirebaseUtils;
 
-public class NotificationsActivity extends AppCompatActivity {
+public class NotificationsActivity extends FirebaseUtils {
 
     private Toolbar toolbar;
     private ImageView backIV;

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.jjoey.transportr.R;
@@ -17,12 +18,13 @@ import com.jjoey.transportr.adapters.DrawerMenuAdapter;
 import com.jjoey.transportr.interfaces.RecyclerClickListener;
 import com.jjoey.transportr.models.DrawerHeader;
 import com.jjoey.transportr.models.DrawerItems;
+import com.jjoey.transportr.utils.FirebaseUtils;
 import com.jjoey.transportr.utils.RecyclerItemTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientHomeActivity extends AppCompatActivity {
+public class ClientHomeActivity extends FirebaseUtils {
 
     private static final String TAG = ClientHomeActivity.class.getSimpleName();
 
@@ -181,6 +183,15 @@ public class ClientHomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         drawerRV = findViewById(R.id.drawerRV);
         drawerLayout = findViewById(R.id.drawerLayout);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.ACTION_DOWN){
+            super.onKeyDown(keyCode, event);
+            return true;
+        }
+        return false;
     }
 
 }

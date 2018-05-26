@@ -1,5 +1,6 @@
 package com.jjoey.transportr.activities;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -9,14 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.jjoey.transportr.fragments.OnGoingTripsFragment;
+import com.jjoey.transportr.fragments.PastTripsFragment;
 import com.jjoey.transportr.R;
+import com.jjoey.transportr.adapters.HistoryTabsPagerAdapter;
+import com.jjoey.transportr.utils.FirebaseUtils;
 
-public class BookingHistoryActivity extends AppCompatActivity {
+public class BookingHistoryActivity extends FirebaseUtils {
 
     private Toolbar toolbar;
     private ImageView backIV;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private HistoryTabsPagerAdapter tabsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,9 @@ public class BookingHistoryActivity extends AppCompatActivity {
             }
         });
 
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.tabsContainer, new OnGoingTripsFragment()).commit();
+
     }
 
     private void initViews() {
@@ -40,6 +50,18 @@ public class BookingHistoryActivity extends AppCompatActivity {
         backIV = findViewById(R.id.backIV);
         tabLayout = findViewById(R.id.bookingTabs);
         viewPager = findViewById(R.id.viewPager);
+
+        setUpViewPager(viewPager);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setupWithViewPager(viewPager);
+
+    }
+
+    private void setUpViewPager(ViewPager viewPager) {
+        tabsPagerAdapter = new HistoryTabsPagerAdapter(getSupportFragmentManager());
+        tabsPagerAdapter.addFragments(new OnGoingTripsFragment(), "Ongoing Trips");
+        tabsPagerAdapter.addFragments(new PastTripsFragment(), "Past Trips");
+        viewPager.setAdapter(tabsPagerAdapter);
     }
 
 }

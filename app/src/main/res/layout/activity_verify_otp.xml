@@ -28,8 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="0.6"
-            android:layout_margin="16dp">
+            android:layout_weight="0.6">
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,30 +55,31 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
-                android:padding="10dp">
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
                 <EditText
                     android:id="@+id/firstDigit"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:background="@drawable/otp_empty_bkg"
                     tools:text="8"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:maxLength="1"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:inputType="number"
                     android:digits="1234567890"
                     android:nextFocusRight="@+id/secondDigit"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="4dp"/>
 
                 <EditText
                     android:id="@+id/secondDigit"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:background="@drawable/otp_empty_bkg"
                     tools:text="5"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:maxLength="1"
                     android:maxLines="1"
                     android:padding="15dp"
@@ -87,16 +87,16 @@
                     android:digits="1234567890"
                     android:nextFocusRight="@+id/thirdDigit"
                     android:layout_toRightOf="@id/firstDigit"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="4dp"/>
 
                 <EditText
                     android:id="@+id/thirdDigit"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:background="@drawable/otp_empty_bkg"
                     android:textColor="@android:color/black"
                     tools:text="6"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:maxLength="1"
                     android:maxLines="1"
                     android:padding="15dp"
@@ -104,22 +104,54 @@
                     android:digits="1234567890"
                     android:nextFocusRight="@+id/fourthDigit"
                     android:layout_toRightOf="@id/secondDigit"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="4dp"/>
 
                 <EditText
                     android:id="@+id/fourthDigit"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:background="@drawable/otp_empty_bkg"
                     tools:text="7"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:maxLength="1"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:inputType="number"
                     android:digits="1234567890"
-                    android:nextFocusRight="@+id/thirdDigit"
-                    android:layout_toRightOf="@id/thirdDigit"/>
+                    android:nextFocusRight="@+id/fifthDigit"
+                    android:layout_toRightOf="@id/thirdDigit"
+                    android:layout_marginRight="4dp"/>
+
+                <EditText
+                    android:id="@+id/fifthDigit"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/otp_empty_bkg"
+                    tools:text="7"
+                    android:textSize="25sp"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:inputType="number"
+                    android:digits="1234567890"
+                    android:nextFocusRight="@+id/sixthDigit"
+                    android:layout_toRightOf="@id/fourthDigit"
+                    android:layout_marginRight="4dp"/>
+
+                <EditText
+                    android:id="@+id/sixthDigit"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/otp_empty_bkg"
+                    tools:text="7"
+                    android:textSize="25sp"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:inputType="number"
+                    android:digits="1234567890"
+                    android:nextFocusRight="@+id/sixthDigit"
+                    android:layout_toRightOf="@id/fifthDigit"/>
 
             </RelativeLayout>
 
@@ -137,20 +169,21 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"/>
 
-            <Button
-                android:id="@+id/continueBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/app_btn_bkg"
-                android:text="@string/otp_continue_text"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:padding="18dp"
-                android:textAllCaps="false"
-                android:layout_marginTop="10dp" />
-
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/app_btn_bkg"
+        android:text="@string/otp_continue_text"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:padding="18dp"
+        android:textAllCaps="false"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

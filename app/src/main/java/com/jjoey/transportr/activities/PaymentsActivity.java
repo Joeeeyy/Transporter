@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.utils.EmptyRecyclerView;
+import com.jjoey.transportr.utils.FirebaseUtils;
 
-public class PaymentsActivity extends AppCompatActivity {
+public class PaymentsActivity extends FirebaseUtils {
 
     private Toolbar toolbar;
     private ImageView backIV;

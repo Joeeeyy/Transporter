@@ -1,6 +1,7 @@
 package com.jjoey.transportr.activities;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoey.transportr.R;
+import com.jjoey.transportr.utils.FirebaseUtils;
 import com.reginald.editspinner.EditSpinner;
 
 public class LandingActivity extends AppCompatActivity {
@@ -24,6 +27,8 @@ public class LandingActivity extends AppCompatActivity {
     private EditText et_phone;
     private ArrayAdapter<String> adapter;
     private Button otp_btn;
+    private String phone;
+    private String code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +47,32 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     private void validate() {
-        String code = et_country_code.getText().toString();
-        String phone = et_phone.getText().toString();
+        code = et_country_code.getText().toString();
+        phone = et_phone.getText().toString();
 
         Log.d(TAG, "Country Code:\t" + code);
         Log.d(TAG, "Phone:\t" + phone);
 
-        startActivity(new Intent(LandingActivity.this, VerifyOTPActivity.class));
+        if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(code)){
+            initOTPFlow(phone);
+        } else {
+            if (phone.length() <= 10){
+                et_phone.requestFocus();
+                Snackbar.make(findViewById(android.R.id.content), "Phone Number Invalid", Snackbar.LENGTH_SHORT).show();
+            }
 
-//        if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(code)){
-//            initOTPFlow();
-//        }
+            if (code.isEmpty()){
+                Toast.makeText(this, "Phone Number Must Include Country Code", Toast.LENGTH_SHORT).show();
+            }
+
+        }
 
     }
 
-    private void initOTPFlow() {
-
+    private void initOTPFlow(String phone) {
+        Intent otpIntent = new Intent(LandingActivity.this, VerifyOTPActivity.class);
+        otpIntent.putExtra("phone", phone);
+        startActivity(otpIntent);
     }
 
     private void initViews() {
@@ -88,8 +103,4 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
-    private void showList() {
-        TextView tv = new TextView(this);
-        tv.setText("Philippines");
-    }
 }

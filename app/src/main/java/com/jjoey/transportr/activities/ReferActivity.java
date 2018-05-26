@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.jjoey.transportr.R;
+import com.jjoey.transportr.utils.FirebaseUtils;
 
-public class ReferActivity extends AppCompatActivity {
+public class ReferActivity extends FirebaseUtils {
 
     private Toolbar toolbar;
     private ImageView backIV;

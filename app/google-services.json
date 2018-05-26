@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "994135689186",
+    "firebase_url": "https://transporter-d0af8.firebaseio.com",
+    "project_id": "transporter-d0af8",
+    "storage_bucket": "transporter-d0af8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994135689186:android:c3f0c0b92eece391",
+        "android_client_info": {
+          "package_name": "com.jjoey.transportr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994135689186-383080ptdt3fvd3qql76nfs8i5qji5hh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jjoey.transportr",
+            "certificate_hash": "a25360c6e47fb3dd4f2003abc7135e7f773b449b"
+          }
+        },
+        {
+          "client_id": "994135689186-faqjhk9v9pm27rcvefbdrn3n56cn45i5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "994135689186-faqjhk9v9pm27rcvefbdrn3n56cn45i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeRx-tNZlRWHEGC5NytxSSWGg_PFf3f_g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994135689186-faqjhk9v9pm27rcvefbdrn3n56cn45i5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

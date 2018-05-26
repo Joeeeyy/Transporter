@@ -15,7 +15,8 @@
     <string name="confirm_password_hint">Confirm Password</string>
 
     <!-- regex -->
-    <string name="letters_only">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <!--<string name="letters_only">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>-->
+    <string name="letters_only"></string>
     <string name="email_only">abcdefghijklmnopqrstuvwxyzzABCDEFGHIJKLMNOPQRSTUVWXYZ.0123456789@</string>
     <string name="password_only">abcdefghijklmnopqrstuvwxyzzABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789</string>
     <string name="add_payment_btn_txt"> + Add New Payment Method</string>
@@ -38,5 +39,17 @@
     <string-array name="countries">
         <item>Philippines +63</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_trips_yet">Oops...Looks Llike You\'ve Been A Hermit</string>
+    <string name="make_trip">Make Trip Now</string>
+    <string name="current_trips_yet">You Have No Trips Currently. Want to Start One?</string>
+    <string name="start_new_trip">Start New Trip</string>
+    <string name="peso_currency">&#8369;</string>
+    <string name="sign_in_txt">Sign In</string>
+    <string name="welcome_user_txt">SIGN IN</string>
+    <string name="sign_in_user_txt">Use Your Credentials to Sign in to Your Account</string>
+    <string name="forgot_pwd_txt">Reset Password</string>
 
 </resources>

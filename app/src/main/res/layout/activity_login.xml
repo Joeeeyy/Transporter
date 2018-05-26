@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/loginLayout"
     tools:context="com.jjoey.transportr.activities.LandingActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:progressTint="@color/colorPrimaryDark"
+        android:layout_centerInParent="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,22 +39,25 @@
             android:layout_weight="0.6"
             android:layout_margin="16dp">
 
-            <EditText
-                android:id="@+id/et_fullname"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/et_icon_bkg"
-                android:hint="@string/full_name_hint"
+                android:text="@string/welcome_user_txt"
+                android:textSize="30sp"
+                android:textColor="@color/otp_gray"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in_user_txt"
+                android:textSize="20sp"
+                android:textColor="@color/otp_gray"
+                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
-                android:textColorHint="@color/otp_gray"
-                android:inputType="text|textPersonName"
-                android:maxLines="1"
-                android:maxLength="18"
-                android:drawableLeft="@drawable/person"
-                android:drawablePadding="10dp"
-                android:padding="15dp"
-                android:layout_marginTop="12dp"
-                android:elevation="10dp"/>
+                android:layout_marginTop="20dp"/>
 
             <EditText
                 android:id="@+id/et_email"
@@ -63,7 +74,7 @@
                 android:drawableLeft="@drawable/email"
                 android:drawablePadding="10dp"
                 android:padding="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:elevation="10dp"/>
 
             <EditText
@@ -84,35 +95,27 @@
                 android:layout_marginTop="12dp"
                 android:elevation="10dp"/>
 
-            <EditText
-                android:id="@+id/et_confirm_pass"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/resetPwdTV"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/et_icon_bkg"
-                android:hint="@string/confirm_password_hint"
-                android:gravity="center"
-                android:textColorHint="@color/otp_gray"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:maxLength="10"
-                android:digits="@string/password_only"
-                android:drawableLeft="@drawable/lock"
-                android:drawablePadding="10dp"
-                android:padding="15dp"
-                android:layout_marginTop="12dp"
-                android:elevation="10dp"/>
+                android:text="@string/forgot_pwd_txt"
+                android:textColor="@color/bluish"
+                android:layout_gravity="end"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"/>
 
             <Button
-                android:id="@+id/loginBtn"
+                android:id="@+id/signInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/app_btn_bkg"
-                android:text="@string/continue_login_text"
+                android:text="@string/sign_in_txt"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:padding="18dp"
                 android:textAllCaps="false"
-                android:layout_marginTop="25dp" />
+                android:layout_marginTop="20dp" />
 
         </LinearLayout>
 
