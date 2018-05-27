@@ -54,7 +54,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((DrawerHeaderViewHolder) holder).phoneTV.setText(header.getPhoneNum());
             Picasso.with(context)
                     .load(header.getProfileIcon())
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.profile_avatar)
                     .into(((DrawerHeaderViewHolder) holder).profileIcon);
 
         } else if (holder instanceof DrawerItemsViewHolder){

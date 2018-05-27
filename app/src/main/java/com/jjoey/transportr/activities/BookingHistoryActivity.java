@@ -15,6 +15,7 @@ import com.jjoey.transportr.fragments.PastTripsFragment;
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.adapters.HistoryTabsPagerAdapter;
 import com.jjoey.transportr.utils.FirebaseUtils;
+import com.jjoey.transportr.utils.SharedPrefsHelper;
 
 public class BookingHistoryActivity extends FirebaseUtils {
 
@@ -24,6 +25,7 @@ public class BookingHistoryActivity extends FirebaseUtils {
     private ViewPager viewPager;
 
     private HistoryTabsPagerAdapter tabsPagerAdapter;
+    private SharedPrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class BookingHistoryActivity extends FirebaseUtils {
 
         initViews();
         setSupportActionBar(toolbar);
+        prefsHelper = new SharedPrefsHelper(this);
+        prefsHelper.setLoggedOut(false);
 
         backIV.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -51,5 +51,7 @@
     <string name="welcome_user_txt">SIGN IN</string>
     <string name="sign_in_user_txt">Use Your Credentials to Sign in to Your Account</string>
     <string name="forgot_pwd_txt">Reset Password</string>
+    <string name="ride_sel_continue">Continue</string>
+    <string name="choose_vehicle_type">Choose Vehicle Type</string>
 
 </resources>

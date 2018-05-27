@@ -11,11 +11,13 @@ import android.widget.ImageView;
 
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.utils.FirebaseUtils;
+import com.jjoey.transportr.utils.SharedPrefsHelper;
 
 public class HelpActivity extends FirebaseUtils {
 
     private Toolbar toolbar;
     private ImageView backIV;
+    private SharedPrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,8 @@ public class HelpActivity extends FirebaseUtils {
 
         initViews();
         setSupportActionBar(toolbar);
+        prefsHelper = new SharedPrefsHelper(this);
+        prefsHelper.setLoggedOut(false);
 
         backIV.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.utils.EmptyRecyclerView;
 import com.jjoey.transportr.utils.FirebaseUtils;
+import com.jjoey.transportr.utils.SharedPrefsHelper;
 
 public class PaymentsActivity extends FirebaseUtils {
 
@@ -22,6 +23,7 @@ public class PaymentsActivity extends FirebaseUtils {
     private EmptyRecyclerView paymentsRV;
     private TextView emptyState;
     private LinearLayout addPaymentBtn;
+    private SharedPrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class PaymentsActivity extends FirebaseUtils {
 
         initViews();
         setSupportActionBar(toolbar);
+        prefsHelper = new SharedPrefsHelper(this);
+        prefsHelper.setLoggedOut(false);
 
         paymentsRV.setEmptyView(emptyState);
 

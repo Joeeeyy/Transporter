@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.utils.EmptyRecyclerView;
 import com.jjoey.transportr.utils.FirebaseUtils;
+import com.jjoey.transportr.utils.SharedPrefsHelper;
 
 public class NotificationsActivity extends FirebaseUtils {
 
@@ -19,6 +20,7 @@ public class NotificationsActivity extends FirebaseUtils {
     private ImageView backIV;
     private EmptyRecyclerView notifsRV;
     private TextView emptyState;
+    private SharedPrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class NotificationsActivity extends FirebaseUtils {
 
         initViews();
         setSupportActionBar(toolbar);
+        prefsHelper = new SharedPrefsHelper(this);
+        prefsHelper.setLoggedOut(false);
 
         backIV.setOnClickListener(new View.OnClickListener() {
             @Override

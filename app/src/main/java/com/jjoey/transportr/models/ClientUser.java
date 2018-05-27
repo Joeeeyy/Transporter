@@ -4,11 +4,11 @@ import java.util.List;
 
 public class ClientUser {
 
-    private String fullName;
-    private String emailAddr;
-    private String imgURL;
-    private String phoneNumber;
-    private List<Trips> numTrips;
+    public String fullName;
+    public String emailAddr;
+    public String imgURL;
+    public String phoneNumber;
+    public List<Trips> numTrips;
 
     public ClientUser() {
     }

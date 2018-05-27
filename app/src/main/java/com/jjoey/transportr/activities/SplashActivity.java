@@ -30,7 +30,13 @@ public class SplashActivity extends FirebaseUtils {
         loggedOut = prefsHelper.getLoggedOut();
         Log.d(TAG, "Logged Out Value:\t" + loggedOut);
 
-        checkHasAccount();
+        new Handler()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkHasAccount();
+                    }
+                }, 5000);
 
     }
 

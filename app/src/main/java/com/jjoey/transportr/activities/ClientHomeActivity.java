@@ -13,13 +13,19 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.adapters.DrawerMenuAdapter;
 import com.jjoey.transportr.interfaces.RecyclerClickListener;
+import com.jjoey.transportr.models.ClientUser;
 import com.jjoey.transportr.models.DrawerHeader;
 import com.jjoey.transportr.models.DrawerItems;
 import com.jjoey.transportr.utils.FirebaseUtils;
 import com.jjoey.transportr.utils.RecyclerItemTouchListener;
+import com.jjoey.transportr.utils.SharedPrefsHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +41,19 @@ public class ClientHomeActivity extends FirebaseUtils {
     private List<Object> objectList = new ArrayList<>();
     private DrawerMenuAdapter menuAdapter;
 
+    private SharedPrefsHelper prefsHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_home);
 
+        prefsHelper = new SharedPrefsHelper(this);
         initViews();
         setSupportActionBar(toolbar);
 
         setUpDrawer();
+        prefsHelper.setLoggedOut(false);
 
     }
 
@@ -53,9 +63,31 @@ public class ClientHomeActivity extends FirebaseUtils {
         drawerRV.setLayoutManager(llm);
         drawerRV.addItemDecoration(new DividerItemDecoration(this, llm.getOrientation()));
 
-        DrawerHeader header = new DrawerHeader();
-        header.setProfileName("Joseph Joey");
-        header.setPhoneNum("+917326996784");
+        final DrawerHeader header = new DrawerHeader();
+
+        usersRef.child(FirebaseUtils.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ClientUser user = dataSnapshot.getValue(ClientUser.class);
+                        Log.d(TAG, user.fullName);
+                        Log.d(TAG, user.emailAddr);
+
+                        header.setProfileName(user.fullName);
+                        header.setPhoneNum("+917326996784");
+
+                        String imgURL = user.imgURL;
+                        Log.d(TAG, "Image URL:\t" + imgURL);
+                        header.setProfileIcon(imgURL);
+
+//                        phoneTV.setText(clientUser.phoneNumber);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
         objectList.add(header);
 

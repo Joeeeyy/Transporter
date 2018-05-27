@@ -77,7 +77,7 @@ public class AuthActivity extends FirebaseUtils {
 
                                                 HashMap<String, String> detailsMap = new HashMap<>();
                                                 detailsMap.put("userId", FirebaseUtils.getUid());
-                                                detailsMap.put("email", clientUser.getEmailAddr());
+                                                detailsMap.put("emailAddr", clientUser.getEmailAddr());
                                                 detailsMap.put("fullName", clientUser.getFullName());
                                                 detailsMap.put("phoneNumber", clientUser.getPhoneNumber());
 
