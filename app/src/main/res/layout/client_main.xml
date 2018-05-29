@@ -8,40 +8,82 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <fragment
+            android:id="@+id/mapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/vehiclesLayout">
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_above="@id/vehiclesLayout"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"
                 android:background="@color/white"
-                android:layout_margin="20dp">
+                android:layout_margin="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/white"
-                    android:layout_margin="20dp">
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/get_u_there"
+                        android:textColor="@color/otp_gray"
+                        android:textSize="16sp"
+                        android:layout_gravity="center" />
+
+                    <EditText
+                        android:id="@+id/startLocationET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/trip_input_bkg"
+                        android:hint="@string/enter_pickup_location"
+                        android:inputType="text"
+                        android:maxLines="2"
+                        android:drawableLeft="@drawable/location_arrow"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="5dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/bluish"
+                        android:layout_marginTop="5dp"/>
+
+                    <EditText
+                        android:id="@+id/dropLocationET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/trip_input_bkg"
+                        android:hint="@string/enter_drop_location"
+                        android:inputType="text"
+                        android:maxLines="2"
+                        android:drawableLeft="@drawable/location_drop"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="8dp"/>
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-
-            <!--<fragment-->
-                <!--android:id="@+id/mapFragment"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent" />-->
 
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/vehiclesLayout"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_above="@id/rideContinueLayout">
 
@@ -50,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:text="@string/choose_vehicle_type"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:padding="5dp"/>

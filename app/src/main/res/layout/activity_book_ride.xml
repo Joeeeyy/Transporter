@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
+        android:minHeight="?android:attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,5 +39,349 @@
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/mapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_above="@id/vehiclesLayout"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:background="@color/white"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_margin="10dp">
+
+                    <EditText
+                        android:id="@+id/startET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/trip_input_bkg"
+                        android:hint="@string/enter_pickup_location"
+                        android:inputType="text"
+                        android:maxLines="2"
+                        android:drawableLeft="@drawable/location_arrow"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="5dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/bluish"
+                        android:layout_marginTop="5dp"/>
+
+                    <EditText
+                        android:id="@+id/dropET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/trip_input_bkg"
+                        android:hint="@string/enter_drop_location"
+                        android:inputType="text"
+                        android:maxLines="2"
+                        android:drawableLeft="@drawable/location_drop"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="8dp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/vehiclesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/gray"
+            android:layout_above="@id/rideActionsLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:text="@string/estimated_pu_time"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/estimatedPUTimeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    tools:text=" 7 minutes"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:layout_marginLeft="8dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/fareEstimateTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="$6-$8"
+                        android:textColor="@color/otp_gray"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Estimated Price"
+                        android:textSize="13sp"
+                        android:textColor="@color/otp_gray"
+                        android:gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/editRiderLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/et_icon_min__bkg">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rider"
+                            android:textSize="14sp"
+                            android:textColor="@color/otp_gray"
+                            android:gravity="center_horizontal"/>
+
+                        <EditText
+                            android:id="@+id/et_rider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/et_icon_min__bkg"
+                            android:gravity="center"
+                            android:textColorHint="@color/otp_gray"
+                            android:text="My Self"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:maxLines="1"
+                            android:maxLength="7"
+                            android:drawableLeft="@drawable/person_profile"
+                            android:drawableRight="@drawable/edit"
+                            android:drawablePadding="10dp"
+                            android:padding="3dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Second Layout -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/paymentOptionsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/et_icon_min__bkg">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Payment"
+                            android:textSize="14sp"
+                            android:textColor="@color/otp_gray"
+                            android:gravity="center_horizontal"/>
+
+                        <EditText
+                            android:id="@+id/et_payment_options"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/et_icon_min__bkg"
+                            android:gravity="center"
+                            android:textColorHint="@color/otp_gray"
+                            android:text="Cash"
+                            android:layout_gravity="center_vertical"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:maxLines="1"
+                            android:maxLength="7"
+                            android:drawableLeft="@drawable/payment"
+                            android:drawableRight="@drawable/edit"
+                            android:drawablePadding="10dp"
+                            android:padding="3dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/couponLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/et_icon_min__bkg">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Coupon"
+                            android:textSize="14sp"
+                            android:textColor="@color/otp_gray"
+                            android:gravity="center_horizontal"/>
+
+                        <EditText
+                            android:id="@+id/et_coupon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/et_icon_min__bkg"
+                            android:gravity="center"
+                            android:textColorHint="@color/otp_gray"
+                            android:text="None"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:layout_gravity="center_vertical"
+                            android:inputType="none"
+                            android:maxLines="1"
+                            android:maxLength="7"
+                            android:drawableLeft="@drawable/cancel_circle_filled"
+                            android:drawableRight="@drawable/edit"
+                            android:drawablePadding="10dp"
+                            android:padding="3dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rideActionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/cancel_btn_txt"
+                android:textColor="@color/otp_gray"
+                android:textSize="18sp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray"/>
+
+            <Button
+                android:id="@+id/bookNowBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/book_now_btn_txt"
+                android:textColor="@color/otp_gray"
+                android:textSize="18sp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

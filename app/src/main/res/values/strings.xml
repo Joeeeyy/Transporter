@@ -14,11 +14,15 @@
     <string name="password_hint">Password</string>
     <string name="confirm_password_hint">Confirm Password</string>
 
+    <string name="google_maps_key">AIzaSyAHax_hn4TBnwe1TBKyv0cDH0_ApKGinSQ</string>
+
     <!-- regex -->
     <!--<string name="letters_only">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>-->
     <string name="letters_only"></string>
     <string name="email_only">abcdefghijklmnopqrstuvwxyzzABCDEFGHIJKLMNOPQRSTUVWXYZ.0123456789@</string>
     <string name="password_only">abcdefghijklmnopqrstuvwxyzzABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789</string>
+
+    <!-- Other Strings -->
     <string name="add_payment_btn_txt"> + Add New Payment Method</string>
     <string name="empty_payment_tv">You Currently Have No Payment Methods Setup</string>
     <string name="refer_n_earn"><![CDATA[Refer & Earn]]></string>
@@ -53,5 +57,12 @@
     <string name="forgot_pwd_txt">Reset Password</string>
     <string name="ride_sel_continue">Continue</string>
     <string name="choose_vehicle_type">Choose Vehicle Type</string>
+    <string name="get_u_there">We Can Help You Get There</string>
+    <string name="enter_pickup_location">Pickup Location</string>
+    <string name="enter_drop_location">Drop Location</string>
+    <string name="cancel_btn_txt">Cancel</string>
+    <string name="book_now_btn_txt">Book Now</string>
+    <string name="estimated_pu_time">Estimated Pickup Time :</string>
+    <string name="select_payment_method">Select Payment Method</string>
 
 </resources>
