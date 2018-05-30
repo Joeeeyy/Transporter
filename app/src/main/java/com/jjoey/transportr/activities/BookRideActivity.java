@@ -3,9 +3,11 @@ package com.jjoey.transportr.activities;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -68,6 +70,7 @@ public class BookRideActivity extends FirebaseUtils {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Coupon Clicked");
+                showCouponDialog();
             }
         });
 
@@ -104,6 +107,25 @@ public class BookRideActivity extends FirebaseUtils {
             }
         });
 
+    }
+
+    private void showCouponDialog() {
+        new MaterialDialog.Builder(this)
+                .theme(Theme.DARK)
+                .title(getResources().getString(R.string.coupon_title_text))
+                .content(R.string.input_content)
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input(R.string.coupon_hint, R.string.pre_fill, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        validateCoupon(input);
+                    }
+                }).show();
+
+    }
+
+    private void validateCoupon(CharSequence input) {
+        String coupon = input.toString();
     }
 
     private void showRiderDialog() {

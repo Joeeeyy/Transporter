@@ -64,5 +64,17 @@
     <string name="book_now_btn_txt">Book Now</string>
     <string name="estimated_pu_time">Estimated Pickup Time :</string>
     <string name="select_payment_method">Select Payment Method</string>
+    <string name="coupon_title_text">Enter Trip Coupon</string>
+    <string name="coupon_hint">MA8NXI2L5CA</string>
+    <string name="input_content">Your Trip Coupon Should be Valid</string>
+    <string name="pre_fill">C4A5OU8P4ON</string>
+    <string name="card_pre_fill">9090876564123897678</string>
+    <string name="credit_card_hint">Enter Credit Card Number</string>
+    <string name="credit_card_title_text">Credit Card Details</string>
+    <string name="card_input_content">Enter Valid 16-19 Digit Credit Card Number</string>
+    <string name="card_name_input_content">Enter Name as Written on Card</string>
+    <string name="credit_card_name_title_text">Card Holder Name</string>
+    <string name="credit_card_name_hint">Card Holder Name</string>
+    <string name="card_Holder_name_pre_fill">John Doe</string>
 
 </resources>
