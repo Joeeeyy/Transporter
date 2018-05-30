@@ -12,7 +12,6 @@ public class AppConstants {
     public static final int START_PLACE_AUTOCOMPLETE_REQUEST_CODE = 2001;
     public static final int DROP_PLACE_AUTOCOMPLETE_REQUEST_CODE = 2002;
 
-
     /** Database References */
     public static String USERS_REF = "/Users";
     public static String DRIVER_LOCATION_REF = "/DriverLocation";
@@ -28,4 +27,9 @@ public class AppConstants {
 
     public static String ADMIN = "/Admin";
     public static String VEHICLE_IMAGES = "/Vehicle_Images";
+
+    /** User Payment Mode Reference */
+    public static String PAYMENT_MODES = "paymentModes";
+    public static final String PAYMENT_MODE_CARD_TYPE = "Pay with Credit or Debit Card";
+
 }

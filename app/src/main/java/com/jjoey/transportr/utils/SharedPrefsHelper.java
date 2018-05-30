@@ -2,13 +2,12 @@ package com.jjoey.transportr.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.ParcelUuid;
 
 public class SharedPrefsHelper {
 
     public Context context;
-    public SharedPreferences logOutPrefs, accountPrefs, cardPaymentPrefs;
-    public SharedPreferences.Editor editor, accountEditor, cardEditor;
+    public SharedPreferences logOutPrefs, accountPrefs, cardPaymentPrefs, cashModePrefs;
+    public SharedPreferences.Editor editor, accountEditor, cardEditor, cashModeEditor;
 
     public static final String KEY_LOG_OUT_PREFS = "hasLoggedOut";
     public static final String LOG_OUT = "logOut";
@@ -19,10 +18,12 @@ public class SharedPrefsHelper {
     public static String CARD_PREFS = "cardPayment";
     public static final String KEY_CARD_HOLDER_NAME = "card_holder_name";
     public static final String KEY_CARD_NUMBER = "card_number";
-    public static final String KEY_CARD_EXPIRY_DATE = "card_expiry_date";
+    public static final String KEY_CARD_EXPIRY_YEAR = "card_expiry_year";
+    public static final String KEY_CARD_EXPIRY_MONTH = "card_expiry_month";
     public static final String KEY_CARD_CVV_NUM = "card_cvv_num";
 
-    private boolean value;
+    public static String KEY_CASH_MODE = "cash_payment";
+    public static String CASH_MODE_VALUE = "cash_mode" ;
 
     public SharedPrefsHelper(Context context) {
         this.context = context;
@@ -35,6 +36,9 @@ public class SharedPrefsHelper {
 
         cardPaymentPrefs = context.getSharedPreferences(CARD_PREFS, Context.MODE_PRIVATE);
         cardEditor = cardPaymentPrefs.edit();
+
+        cashModePrefs = context.getSharedPreferences(KEY_CASH_MODE, Context.MODE_PRIVATE);
+        cashModeEditor = cashModePrefs.edit();
 
     }
 
@@ -56,10 +60,22 @@ public class SharedPrefsHelper {
         return logOutPrefs.getBoolean(LOG_OUT, false);
     }
 
-    public void saveCardDetails(String name, String number,String expiry, String cvv) {
+    public void saveCashMode(boolean isCashMode){
+        cashModeEditor.putBoolean(CASH_MODE_VALUE, isCashMode);
+        cashModeEditor.commit();
+    }
+
+    public boolean getCashMode(){
+        return cashModePrefs.getBoolean(CASH_MODE_VALUE, false);
+    }
+
+    // TODO: 5/30/2018 Save Card and PayPal Modes
+
+    public void saveCardDetails(String name, String number, String expiryYear, String expiryMonth, String cvv) {
         cardEditor.putString(KEY_CARD_HOLDER_NAME, name);
         cardEditor.putString(KEY_CARD_NUMBER, number);
-        cardEditor.putString(KEY_CARD_EXPIRY_DATE, expiry);
+        cardEditor.putString(KEY_CARD_EXPIRY_YEAR, expiryYear);
+        cardEditor.putString(KEY_CARD_EXPIRY_MONTH, expiryMonth);
         cardEditor.putString(KEY_CARD_CVV_NUM, cvv);
         cardEditor.commit();
     }
@@ -72,8 +88,12 @@ public class SharedPrefsHelper {
         return cardPaymentPrefs.getString(KEY_CARD_NUMBER, null);
     }
 
-    public String getCardExpiryDate() {
-        return cardPaymentPrefs.getString(KEY_CARD_EXPIRY_DATE, null);
+    public String getCardExpiryYear() {
+        return cardPaymentPrefs.getString(KEY_CARD_EXPIRY_YEAR, null);
+    }
+
+    public String getCardExpiryMonth() {
+        return cardPaymentPrefs.getString(KEY_CARD_EXPIRY_MONTH, null);
     }
 
     public String getCardCVVNumber(){
