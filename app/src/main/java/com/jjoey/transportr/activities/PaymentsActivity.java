@@ -3,6 +3,7 @@ package com.jjoey.transportr.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,8 +22,12 @@ import com.braintreepayments.cardform.OnCardFormValidListener;
 import com.braintreepayments.cardform.view.CardForm;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.jjoey.transportr.R;
 import com.jjoey.transportr.adapters.PaymentsAdapter;
+import com.jjoey.transportr.models.ClientUser;
 import com.jjoey.transportr.models.PaymentOptions;
 import com.jjoey.transportr.utils.AppConstants;
 import com.jjoey.transportr.utils.EmptyRecyclerView;
@@ -71,10 +76,12 @@ public class PaymentsActivity extends FirebaseUtils {
             }
         });
 
+        options = new PaymentOptions();
+        getUserPaymentInfo();
+
         addPaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 5/24/2018 Show Select Payment Options
                 showOptionsDialog();
             }
         });
@@ -84,8 +91,62 @@ public class PaymentsActivity extends FirebaseUtils {
 
     }
 
+    private void getUserPaymentInfo() {
+        usersRef.child(FirebaseUtils.getUid()).child(AppConstants.PAYMENT_MODES)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Log.d(TAG, "DataSnapshot:\t" + ds.getChildren());
+                            Log.d(TAG, "Keys:\t" + ds.getKey());
+
+                            usersRef.child(FirebaseUtils.getUid()).child(AppConstants.PAYMENT_MODES)
+                                    .child(ds.getKey().toString())
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            String paymentMode = (String) dataSnapshot.child("Payment Mode").getValue();
+                                            Log.d(TAG, "Cash Payment from Firebase:\t" + paymentMode);
+                                            if (paymentMode.equals(AppConstants.CASH_PAYMENT_MODES)){
+                                                options.setCash(true);
+                                                options.setCard(false);
+                                                options.setProvider(false);
+                                                options.setPaymentType(paymentMode);
+                                                options.setPaymentIcon(R.drawable.cash_icon);
+                                                list.add(options);
+                                                adapter.notifyDataSetChanged();
+                                                isCashSetup = true;
+                                            }
+                                            if (paymentMode.equals(AppConstants.CARD_PAYMENT_MODES)){
+                                                PaymentOptions paymentOptions = new PaymentOptions();
+                                                paymentOptions.setCard(true);
+                                                paymentOptions.setCash(false);
+                                                paymentOptions.setProvider(false);
+                                                paymentOptions.setPaymentType(paymentMode);
+                                                paymentOptions.setPaymentIcon(R.drawable.card_icon);
+                                                list.add(paymentOptions);
+                                                adapter.notifyDataSetChanged();
+                                                isCardSetup = true;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
     private void showOptionsDialog() {
-        options = new PaymentOptions();
         final CharSequence[] items = {"Cash Payment", "Pay with Credit/Debit Card", "Pay with PayPal"};
         final MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .theme(Theme.DARK)
@@ -147,7 +208,6 @@ public class PaymentsActivity extends FirebaseUtils {
                                                         String mobile = cf.getMobileNumber();
                                                         String expiryYear = cf.getExpirationYear();
                                                         String expiryMonth = cf.getExpirationMonth();
-//                                                        String dateExpiry = expiryMonth + "/" + expiryYear;
                                                         prefsHelper.saveCardDetails("", num, expiryYear, expiryMonth, cvv);
 
                                                         options.setCard(true);
@@ -162,7 +222,6 @@ public class PaymentsActivity extends FirebaseUtils {
 
                                                         saveUserPaymentMode(isCashSetup, isCardSetup, isPayPalSetup);
 
-
                                                     }
                                                 });
                                             } else {
@@ -176,6 +235,7 @@ public class PaymentsActivity extends FirebaseUtils {
                                 }
                                 break;
                             case 2:
+                                // TODO: 5/30/2018 Get PayPal User Info and Save to Firebase
                                 if (isPayPalSetup == false) {
                                     options.setProvider(true);
                                     options.setCash(false);
@@ -202,11 +262,9 @@ public class PaymentsActivity extends FirebaseUtils {
 
     private void saveUserPaymentMode(boolean isCashSetup, boolean isCardSetup, boolean isPayPalSetup) {
 
-        if (isCashSetup == true){
+        if (isCashSetup == true) {
             HashMap<String, String> cashMode = new HashMap<>();
-            String type_mode = options.getPaymentType();
-            type_mode.replace("/", "_");
-            cashMode.put("Cash Payment", type_mode);
+            cashMode.put("Payment Mode", options.getPaymentType());
 
             Log.d(TAG, "CashMode Value from Prefs:\t" + prefsHelper.getCashMode());
 
@@ -216,17 +274,17 @@ public class PaymentsActivity extends FirebaseUtils {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Log.d(TAG, "Saved Cash Payment Mode");
                             } else {
                                 Log.d(TAG, "Failed to Save Cash Payment Mode");
                             }
                         }
                     });
-        } else if (isCardSetup == true){
+        } else if (isCardSetup == true) {
             HashMap<String, String> cardMode = new HashMap<>();
-            cardMode.put("Pay with Credit or Debit Card", options.getPaymentType());
-            Log.d(TAG, "Payment mode:\t" + options.getPaymentType());
+            cardMode.put("Payment Mode", options.getPaymentType());
+            Log.d(TAG, "Payment mode:\t" + AppConstants.PAYMENT_MODE_CARD_TYPE);
 
             HashMap<String, String> cardDetails = new HashMap<>();
             cardDetails.put("card_number", prefsHelper.getCardNumber());
@@ -238,14 +296,16 @@ public class PaymentsActivity extends FirebaseUtils {
 
             cardMode.put("card_details", String.valueOf(cardDetails));
 
-            usersRef.child(FirebaseUtils.getUid()).child(AppConstants.PAYMENT_MODES + "/" + AppConstants.PAYMENT_MODE_CARD_TYPE )
+//            usersRef.child(FirebaseUtils.getUid()).child(AppConstants.PAYMENT_MODES + "/" + AppConstants.PAYMENT_MODE_CARD_TYPE )
+            usersRef.child(FirebaseUtils.getUid()).child(AppConstants.PAYMENT_MODES)
                     .push()
-                    .setValue(cardDetails)
+                    .setValue(cardMode)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Log.d(TAG, "Saved Card Payment Mode");
+                                Snackbar.make(findViewById(android.R.id.content), "Your Card Details Have Been Saved Securely. Future Trips Can Now be Paid Using this Card", Snackbar.LENGTH_LONG).show();
                             } else {
                                 Log.d(TAG, "Failed to Save Card Payment Mode");
                             }

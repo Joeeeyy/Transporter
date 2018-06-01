@@ -44,7 +44,6 @@
         <item>Philippines +63</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_trips_yet">Oops...Looks Llike You\'ve Been A Hermit</string>
     <string name="make_trip">Make Trip Now</string>

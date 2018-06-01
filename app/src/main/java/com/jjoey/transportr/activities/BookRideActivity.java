@@ -175,6 +175,7 @@ public class BookRideActivity extends FirebaseUtils {
     }
 
     private void showPaymentsDialog() {
+        // TODO: 5/30/2018 Get User Payment Options From Firebase
         final CharSequence[] items = {"Cash", "Card", "PayPal"};
         final MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .theme(Theme.DARK)

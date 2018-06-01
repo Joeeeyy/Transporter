@@ -1,17 +1,21 @@
 package com.jjoey.transportr.activities;
 
-import android.content.Context;
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,29 +24,31 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -66,7 +72,7 @@ import java.util.List;
 import static com.jjoey.transportr.utils.AppConstants.DROP_PLACE_AUTOCOMPLETE_REQUEST_CODE;
 import static com.jjoey.transportr.utils.AppConstants.START_PLACE_AUTOCOMPLETE_REQUEST_CODE;
 
-public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallback,  GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
+public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallback {
 
     private static final String TAG = ClientHomeActivity.class.getSimpleName();
 
@@ -92,8 +98,8 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
 
     public GoogleMap mGmap;
     public SupportMapFragment mapFragment;
+    private FusedLocationProviderClient fusedLocationProviderClient;
     public Location mLastLocation;
-    public GoogleApiClient apiClient;
     public Marker mUserMarker;
     public LocationRequest locationRequest;
 
@@ -108,11 +114,13 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
         initViews();
         setSupportActionBar(toolbar);
 
+        Log.d(TAG, "BEFORE CHECK");
+        checkPerms();
+
         setUpDrawer();
         prefsHelper.setLoggedOut(false);
 
         getVehicles();
-
         handlePlacesInput();
 
         rideContinueLayout.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +138,134 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
             }
         });
 
+    }
+
+    private void checkPerms() {
+        Log.d(TAG, "DO CHECK");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "INSIDE CHECK");
+            reqPerms();
+        }
+    }
+
+    private void reqPerms() {
+        Log.d(TAG, "ASKING");
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstants.LOC_PERMS_REQ_CODE);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case AppConstants.LOC_PERMS_REQ_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "GRANTED");
+                    startLocationListening();
+                } else {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        Log.d(TAG, "Permission Rationale");
+                    } else {
+                        reqPerms();
+                    }
+
+                }
+                break;
+        }
+    }
+
+    private void startLocationListening() {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(AppConstants.UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(AppConstants.FASTEST_INTERVAL);
+        locationRequest.setSmallestDisplacement(AppConstants.DISPLACEMENT);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(locationRequest);
+
+        LocationSettingsRequest settingsRequest = builder.build();
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        client.checkLocationSettings(settingsRequest);
+
+        displayLocation();
+
+    }
+
+    private void displayLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, mLocationCallbacks, Looper.myLooper());
+            mGmap.setIndoorEnabled(true);
+            mGmap.setMyLocationEnabled(true);
+        } else {
+            reqPerms();
+            mGmap.setMyLocationEnabled(false);
+        }
+    }
+
+    private LocationCallback mLocationCallbacks = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            super.onLocationResult(locationResult);
+            mLastLocation = locationResult.getLastLocation();
+
+            if (mUserMarker != null && mLastLocation != null) {
+                mUserMarker.remove();
+
+                latitude = mLastLocation.getLatitude();
+                Log.d(TAG, "Lat:\t" + latitude);
+                longitude = mLastLocation.getLongitude();
+                Log.d(TAG, "Long:\t" + longitude);
+            }
+
+            MarkerOptions options = new MarkerOptions();
+            options.position(new LatLng(latitude, longitude));
+            options.title("Driver");
+            //options.icon(BitmapDescriptorFactory.fromResource(R.drawable.car)); // throws error
+
+            mUserMarker = mGmap.addMarker(options);
+            rotateMarker(mUserMarker, 360, mGmap);
+            mGmap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 18.0f));
+
+        }
+    };
+
+    private void rotateMarker(final Marker currentMarker, final float i, GoogleMap mGmap) {
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final float startRotation = currentMarker.getRotation();
+        final int duration = 1500;
+
+        final Interpolator interpolator = new LinearInterpolator();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.elapsedRealtime() - start;
+                float t = interpolator.getInterpolation(elapsed / duration);
+                float rot = t * i + (1 - t) * startRotation;
+                currentMarker.setRotation(-rot > 180 ? rot / 2 : rot);
+
+                if (t < 1.0) {
+                    handler.postDelayed(this, 16);
+                }
+
+            }
+        }, duration);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopLocationListening();
+    }
+
+    private void stopLocationListening() {
+        if (fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.removeLocationUpdates(mLocationCallbacks);
+        }
     }
 
     private void clearInputs() {
@@ -186,7 +322,8 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
                     Status status = PlaceAutocomplete.getStatus(this, data);
                     Log.d(TAG, status.getStatusMessage());
 
-                } else if (resultCode == RESULT_CANCELED) {  }
+                } else if (resultCode == RESULT_CANCELED) {
+                }
                 break;
             case DROP_PLACE_AUTOCOMPLETE_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
@@ -197,7 +334,8 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
                     Status status = PlaceAutocomplete.getStatus(this, data);
                     Log.d(TAG, status.getStatusMessage());
 
-                } else if (resultCode == RESULT_CANCELED) {  }
+                } else if (resultCode == RESULT_CANCELED) {
+                }
                 break;
         }
     }
@@ -416,8 +554,6 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-        getLocation();
-
     }
 
     @Override
@@ -432,115 +568,15 @@ public class ClientHomeActivity extends FirebaseUtils implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGmap = googleMap;
-    }
 
-    public void getLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.LOCATION_PERMS_REQ_CODE);
-        } else {
-            if (checkPlayServices()) {
-                buildApiClient();
-                makeLocationRequest();
-                displayLocation();
-            }
-        }
-    }
+        View mapBtn = (View) ((View) mapFragment.getView().findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mapBtn.getLayoutParams();
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        params.setMargins(0, 0, 30, 30);
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case AppConstants.LOCATION_PERMS_REQ_CODE:
-                for (int gr : grantResults) {
-                    if (gr == PackageManager.PERMISSION_GRANTED) {
-                        if (checkPlayServices()) {
-                            buildApiClient();
-                            makeLocationRequest();
-                            displayLocation();
-                        }
-                    } else {
-                        finish();
-                        moveTaskToBack(true);
-                    }
-                }
-                break;
-        }
-    }
-
-    public void displayLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: 5/29/2018 Send user to settings to grant permission
-        }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-        if (mLastLocation != null){
-            latitude = mLastLocation.getLatitude();
-            Log.d(TAG, "Your Latitude:\t" + latitude);
-            longitude = mLastLocation.getLongitude();
-            Log.d(TAG, "Your Longitude:\t" + longitude);
-
-            geoFire.setLocation(getUid(), new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
-                @Override
-                public void onComplete(String key, DatabaseError error) {
-                    if (error != null){
-                        Toast.makeText(ClientHomeActivity.this, "Could Not Get Your Location", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (mUserMarker != null){
-                            mUserMarker.remove();
-                            mUserMarker = mGmap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(latitude, longitude)).title("Your Location"));
-                        }
-                    }
-                }
-            });
-
-        }
-    }
-
-    public void makeLocationRequest() {
-        locationRequest = LocationRequest.create();
-        locationRequest.setFastestInterval(AppConstants.FASTEST_INTERVAL);
-        locationRequest.setSmallestDisplacement(AppConstants.DISPLACEMENT);
-        locationRequest.setInterval(AppConstants.UPDATE_INTERVAL);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-    public void buildApiClient() {
-        apiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        apiClient.connect();
-    }
-
-    public boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, AppConstants.PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Snackbar.make(findViewById(android.R.id.content), "Play Services NOT Supported on Your Device", Snackbar.LENGTH_LONG).show();
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "API Client Connection Failed:\t" + connectionResult.getErrorMessage().toString());
-        apiClient.connect();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
+        startLocationListening();
 
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        apiClient.connect();
-    }
 }

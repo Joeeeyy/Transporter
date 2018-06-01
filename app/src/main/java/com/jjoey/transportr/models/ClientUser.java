@@ -8,16 +8,18 @@ public class ClientUser {
     public String emailAddr;
     public String imgURL;
     public String phoneNumber;
+    public PaymentOptions paymentOptions;
     public List<Trips> numTrips;
 
     public ClientUser() {
     }
 
-    public ClientUser(String fullName, String emailAddr, String imgURL, String phoneNumber, List<Trips> numTrips) {
+    public ClientUser(String fullName, String emailAddr, String imgURL, String phoneNumber, PaymentOptions paymentOptions, List<Trips> numTrips) {
         this.fullName = fullName;
         this.emailAddr = emailAddr;
         this.imgURL = imgURL;
         this.phoneNumber = phoneNumber;
+        this.paymentOptions = paymentOptions;
         this.numTrips = numTrips;
     }
 
@@ -53,6 +55,14 @@ public class ClientUser {
         this.phoneNumber = phoneNumber;
     }
 
+    public PaymentOptions getPaymentOptions() {
+        return paymentOptions;
+    }
+
+    public void setPaymentOptions(PaymentOptions paymentOptions) {
+        this.paymentOptions = paymentOptions;
+    }
+
     public List<Trips> getNumTrips() {
         return numTrips;
     }
@@ -60,5 +70,4 @@ public class ClientUser {
     public void setNumTrips(List<Trips> numTrips) {
         this.numTrips = numTrips;
     }
-
 }
